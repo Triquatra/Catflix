@@ -4,7 +4,7 @@ export default function HomeScreen() {
   return (
   <View>
     <Text>
-      This is the HomeScreen
+      Welcome to Catflix! *meow*
     </Text>
   </View>
   )
