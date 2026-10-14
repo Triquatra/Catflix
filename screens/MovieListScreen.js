@@ -1,17 +1,30 @@
-import { Text, View, StyleSheet, Button} from "react-native";
+import { useState } from "react";
+import { Text, View, StyleSheet, Pressable} from "react-native";
+
+
+
 
 export default function MovieListScreen({ navigation }) {
+
+  const [movies, setMovies] = useState([]);
+
+  async function loadMovies() {
+    const response = await fetch("https://api.themoviedb.org/3/movie/popular?api_key=" + process.env.EXPO_PUBLIC_TMDB_API_KEY);
+    const data = await response.json();
+    
+    setMovies(data.results);
+  }
+
   return (
   <View style={styles.container}>
     <Text>
       This is the MovieListScreen
     </Text>
-     <Button
-                title="Show movies"
-                onPress={() =>
-                    navigation.navigate("MovieDetail")
-                }
-                />
+     <Pressable style={styles.button}        
+                onPress={() => loadMovies()}>
+                      <Text>Load movies</Text>
+                </Pressable>
+    <Text>These are all the movies:{movies.length}</Text>
   </View>
   );
 }
@@ -25,5 +38,13 @@ const styles = StyleSheet.create({
     backgroundColor: "#6ba763",
     alignItems: "center",
     justifyContent: "center",
+  },
+  button: {
+    justifyContent: "space-around",
+    borderRadius: 28,
+    padding: 18,
+    borderColor: "black",
+    backgroundColor: "white",
+    margin: 10,
   },
 });
