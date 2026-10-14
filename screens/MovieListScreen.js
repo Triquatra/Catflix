@@ -1,9 +1,6 @@
 import { useState } from "react";
 import { Text, View, StyleSheet, Pressable, FlatList} from "react-native";
-
-
-
-
+import MovieCard from "../components/MovieCard"; 
 
 export default function MovieListScreen({ navigation }) {
 
@@ -30,7 +27,7 @@ export default function MovieListScreen({ navigation }) {
       data={movies}
       keyExtractor={(item) =>String(item.id)}
       renderItem={({ item }) => (
-        <Text>{ item.title}</Text>
+        <MovieCard movie={item} />
       )}
       />
   </View>
