@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Text, View, StyleSheet, Pressable} from "react-native";
+import { Text, View, StyleSheet, Pressable, FlatList} from "react-native";
+
 
 
 
@@ -25,6 +26,13 @@ export default function MovieListScreen({ navigation }) {
                       <Text>Load movies</Text>
                 </Pressable>
     <Text>These are all the movies:{movies.length}</Text>
+    <FlatList
+      data={movies}
+      keyExtractor={(item) =>String(item.id)}
+      renderItem={({ item }) => (
+        <Text>{ item.title}</Text>
+      )}
+      />
   </View>
   );
 }
