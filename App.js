@@ -9,6 +9,9 @@ import ReviewFormScreen from './screens/ReviewFormScreen';
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { useFonts } from 'expo-font';
+import { Righteous_400Regular } from '@expo-google-fonts/righteous';
+import { Poppins_400Regular } from '@expo-google-fonts/poppins';
 
 /*
   Navigation:
@@ -61,6 +64,15 @@ function AccountStack() {
 
 
 export default function App() {
+  
+const [fontsLoaded] = useFonts({
+  Righteous_400Regular,
+  Poppins_400Regular,
+});
+
+if (!fontsLoaded) {
+  return null;
+}
   return (
     <NavigationContainer>
       <MainTabs />
