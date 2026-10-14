@@ -1,11 +1,13 @@
 import { Text, View, StyleSheet } from "react-native";
 
 export default function RegisterScreen() {
-  <View>
+  return(
+  <View style={styles.container}>
     <Text>
       This is the RegisterScreen
     </Text>
   </View>
+  );
 }
 
 const styles = StyleSheet.create({
