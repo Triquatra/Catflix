@@ -18,10 +18,10 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
       ├── MovieMenu  → MainStack
       │     ├── MovieList    (första screenen)
       │     ├── MovieDetail
-      │     ├── Review
-      │     ├── Login
-      │     └── Register
-      └── Account    → LoginScreen
+      │     └── Review
+      └── Account    → AccountStack
+            ├── Login        (första screenen)
+            └── Register
 */
 
 
@@ -32,9 +32,7 @@ function MainStack() {
   return (
   <Stack.Navigator>
     <Stack.Screen name="MovieList" component={MovieListScreen} />
-    <Stack.Screen name="Login" component={LoginScreen} />
     <Stack.Screen name="MovieDetail" component={MovieDetailScreen} />
-    <Stack.Screen name="Register" component={RegisterScreen} />
     <Stack.Screen name="Review" component={ReviewFormScreen} />
   </Stack.Navigator>
   );
@@ -44,10 +42,21 @@ function MainTabs() {
   return (
     <Tab.Navigator>
       <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="MovieMenu" component={MainStack} />
-      <Tab.Screen name="Account" component={LoginScreen} />
+      <Tab.Screen name="MovieMenu" component={MainStack} options={{
+        popToTopOnBlur: true,
+      }} />
+      <Tab.Screen name="Account" component={AccountStack} />
     </Tab.Navigator>
   );
+}
+
+function AccountStack() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="Login" component={LoginScreen} />
+      <Stack.Screen name="Register" component={RegisterScreen} />
+    </Stack.Navigator>
+  )
 }
 
 

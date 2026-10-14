@@ -10,7 +10,7 @@ export default function HomeScreen( { navigation }) {
       />
       <Button
         title="Register"
-        onPress={() => navigation.navigate("MovieMenu", {screen: "Register"})}
+        onPress={() => navigation.navigate("Account", {screen: "Register"})}
       />
     </View>
   );

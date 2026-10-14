@@ -1,11 +1,19 @@
-import { Text, View, StyleSheet } from "react-native";
+import { Text, View, StyleSheet, Button } from "react-native";
 
-export default function LoginScreen() {
+export default function LoginScreen( { navigation }) {
   return (
   <View style={styles.container}>
     <Text>
       This is the LoginScreen
     </Text>
+    <Button
+      title="Log in"
+      onPress={() => {}}
+      />
+    <Button
+      title="Register new account"
+      onPress={() => navigation.navigate("Register")}
+      />
   </View>
   );
 }
