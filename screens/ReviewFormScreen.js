@@ -9,3 +9,12 @@ export default function ReviewFormScreen() {
     </Text>
   </View>
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#f8ceb2",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+});

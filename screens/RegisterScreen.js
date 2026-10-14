@@ -7,3 +7,12 @@ export default function RegisterScreen() {
     </Text>
   </View>
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#e2b3f0",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+});
