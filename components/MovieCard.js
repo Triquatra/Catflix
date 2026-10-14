@@ -1,8 +1,12 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Image } from "react-native";
 
 export default function MovieCard({ movie }) {
   return (
     <View style={styles.container}>
+      <Image style={styles.image}
+         source={{
+    uri: "https://image.tmdb.org/t/p/w500" + movie.backdrop_path
+         }}/>
       <Text style={styles.titel}>{movie.title} </Text>
       <Text>{movie.release_date}</Text>
     </View>
@@ -12,7 +16,7 @@ export default function MovieCard({ movie }) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#82dadd",
+    backgroundColor: "#505555",
     borderRadius: 20,
     alignItems: "center",
     justifyContent: "center",
@@ -27,5 +31,9 @@ const styles = StyleSheet.create({
   titel: {
     fontSize: 16,
     fontFamily: "Righteous_400Regular",
-  }
+  },
+  image: {
+    width: "100%",
+    aspectRatio: 16/9,
+  },
 });

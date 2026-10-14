@@ -15,14 +15,14 @@ export default function MovieListScreen({ navigation }) {
 
   return (
   <View style={styles.container}>
-    <Text>
+    <Text style={styles.container}>
       This is the MovieListScreen
     </Text>
      <Pressable style={styles.button}        
                 onPress={() => loadMovies()}>
                       <Text>Load movies</Text>
                 </Pressable>
-    <Text>These are all the movies:{movies.length}</Text>
+    <Text style={styles.container}>These are all the movies:{movies.length}</Text>
     <FlatList
       data={movies}
       keyExtractor={(item) =>String(item.id)}
@@ -40,9 +40,10 @@ export default function MovieListScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#6ba763",
+    backgroundColor: "#0a0a0a",
     alignItems: "center",
     justifyContent: "center",
+    color: "white",
   },
   button: {
     justifyContent: "space-around",
