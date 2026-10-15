@@ -4,6 +4,7 @@ import MovieCard from "../components/MovieCard";
 
 export default function MovieListScreen({ navigation }) {
   const [movies, setMovies] = useState([]);
+  const [loading, setLoading] = useState (true);
 
   useEffect(() => {
     async function getMovies() {
@@ -14,9 +15,14 @@ export default function MovieListScreen({ navigation }) {
       const data = await response.json();
 
       setMovies(data.results);
+      setLoading(false);
     }
     getMovies();
-  }, []);
+  },
+  []);
+   if (loading) {
+     return <Text>Loading...</Text>;
+   }
 
   return (
   <View style={styles.container}>
