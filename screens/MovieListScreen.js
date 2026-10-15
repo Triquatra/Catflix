@@ -5,23 +5,51 @@ import MovieCard from "../components/MovieCard";
 export default function MovieListScreen({ navigation }) {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState (true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     async function getMovies() {
+      try {
       const response = await fetch(
         "https://api.themoviedb.org/3/movie/popular?api_key=" +
           process.env.EXPO_PUBLIC_TMDB_API_KEY,
       );
+     
       const data = await response.json();
-
       setMovies(data.results);
-      setLoading(false);
+
+      } catch (error) {
+        setError("Couldn't fetch movies");
+      } finally {
+       setLoading(false); 
+      }
     }
     getMovies();
   },
   []);
+
    if (loading) {
-     return <Text>Loading...</Text>;
+     return (
+     <View>
+       <Text>Loading...</Text>
+     </View>
+     )
+   }
+
+   if (error) {
+    return (
+      <View>
+        <Text>{error}</Text>
+      </View>
+    )
+   }
+
+   if (movies.length === 0) {
+    return (
+      <View>
+        <Text>No movies found.</Text>
+      </View>
+    )
    }
 
   return (
