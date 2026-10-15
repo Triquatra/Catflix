@@ -23,11 +23,22 @@ export default function MovieListScreen({ navigation }) {
                       <Text>Load movies</Text>
                 </Pressable>
     <Text style={styles.container}>These are all the movies:{movies.length}</Text>
+    
+    {/*När man trycker på ett kort körs onPress.
+     Den säger åt navigation att gå till MovieDetail
+    och skickar med en lapp med etiketten movie där filmen ligger.*/}
     <FlatList
       data={movies}
       keyExtractor={(item) =>String(item.id)}
       renderItem={({ item }) => (
-        <MovieCard movie={item} />
+        <Pressable
+        onPress={() =>
+          navigation.navigate("MovieDetail", { movie: item }
+          )
+        }
+        >
+          <MovieCard movie={item} />
+          </Pressable>
       )}
       />
   </View>
