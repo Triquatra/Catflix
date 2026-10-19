@@ -26,7 +26,12 @@ function AuthProvider({ children }) {
      await SecureStore.setItemAsync("token", data.token);
   }
 
-  return <AuthContext.Provider value={{token, login}}>{children}</AuthContext.Provider>;
+    async function logout() {
+      setToken(null);
+      await SecureStore.deleteItemAsync("token");
+    }
+
+  return <AuthContext.Provider value={{token, login, logout}}>{children}</AuthContext.Provider>;
 }
 
 export { AuthContext, AuthProvider };

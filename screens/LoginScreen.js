@@ -1,16 +1,21 @@
-import { Text, View, StyleSheet, Button, TextInput } from "react-native";
+import { Text, View, StyleSheet, Button, TextInput, Pressable } from "react-native";
 import { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 
 export default function LoginScreen( { navigation }) {
    const [username, setUsername] = useState("");
    const [password, setPassword] = useState("");
-   const { login, token } = useContext(AuthContext);
+   const { login, token, logout } = useContext(AuthContext);
 
    if (token) {
-    return <View>
+    return <View styles={styles.container}>
       <Text>You are logged in.</Text>
+    <Pressable style={styles.button}
+         onPress={() => logout()}>
+         <Text>Logout</Text>
+         </Pressable>
     </View>
+     
    }
 
   return (
@@ -19,7 +24,7 @@ export default function LoginScreen( { navigation }) {
       <TextInput
         value={username}
         onChangeText={setUsername}
-        placeholder="User name"
+        placeholder="Username"
       />
       <TextInput
         value={password}
@@ -42,5 +47,14 @@ const styles = StyleSheet.create({
     backgroundColor: "#ffb570",
     alignItems: "center",
     justifyContent: "center",
+  },
+  button: {
+    justifyContent: "space-around",
+    borderRadius: 28,
+    padding: 18,
+    borderColor: "black",
+    borderWidth: 2,
+    backgroundColor: "#fc1e1e",
+    margin: 10,
   },
 });
