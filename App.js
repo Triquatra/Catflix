@@ -12,6 +12,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useFonts } from 'expo-font';
 import { Righteous_400Regular } from '@expo-google-fonts/righteous';
 import { Poppins_400Regular } from '@expo-google-fonts/poppins';
+import { AuthProvider } from './context/AuthContext';
 
 /*
   Navigation:
@@ -74,10 +75,11 @@ if (!fontsLoaded) {
   return null;
 }
   return (
-    <NavigationContainer>
-      <MainTabs />
-    </NavigationContainer>
-    
+    <AuthProvider>
+      <NavigationContainer>
+        <MainTabs />
+      </NavigationContainer>
+    </AuthProvider>
   );
 }
 
