@@ -11,7 +11,7 @@ export default function HomeScreen( { navigation }) {
        </Text>
 
       <Pressable style={styles.button}
-      onPress={() => navigation.navigate("Account")}>
+      onPress={() => navigation.navigate("Account", {screen: "Login"})}>
       <Text>Login</Text>
       </Pressable>
 

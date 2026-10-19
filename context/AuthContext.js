@@ -31,7 +31,21 @@ function AuthProvider({ children }) {
       await SecureStore.deleteItemAsync("token");
     }
 
-  return <AuthContext.Provider value={{token, login, logout}}>{children}</AuthContext.Provider>;
+    async function register (username, password) {
+      const response = await fetch(
+        process.env.EXPO_PUBLIC_API_URL + "/api/register",
+        {
+          method: "POST",
+          headers: { "Content-type": "application/json" },
+          body: JSON.stringify({
+            userName: username, userPassword: password
+          })
+        },
+      );
+      await login (username, password);
+    }
+
+  return <AuthContext.Provider value={{token, login, logout, register}}>{children}</AuthContext.Provider>;
 }
 
 export { AuthContext, AuthProvider };

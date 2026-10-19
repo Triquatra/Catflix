@@ -49,7 +49,9 @@ function MainTabs() {
       <Tab.Screen name="MovieMenu" component={MainStack} options={{
         popToTopOnBlur: true,
       }} />
-      <Tab.Screen name="Account" component={AccountStack} />
+      <Tab.Screen name="Account" component={AccountStack} options={{
+        popToTopOnBlur: true,
+      }} />
     </Tab.Navigator>
   );
 }
