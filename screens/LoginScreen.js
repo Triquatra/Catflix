@@ -5,7 +5,13 @@ import { AuthContext } from "../context/AuthContext";
 export default function LoginScreen( { navigation }) {
    const [username, setUsername] = useState("");
    const [password, setPassword] = useState("");
-   const { login } = useContext(AuthContext);
+   const { login, token } = useContext(AuthContext);
+
+   if (token) {
+    return <View>
+      <Text>You are logged in.</Text>
+    </View>
+   }
 
   return (
     <View style={styles.container}>
