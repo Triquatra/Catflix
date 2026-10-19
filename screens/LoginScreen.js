@@ -1,20 +1,32 @@
-import { Text, View, StyleSheet, Button } from "react-native";
+import { Text, View, StyleSheet, Button, TextInput } from "react-native";
+import { useContext, useState } from "react";
+import { AuthContext } from "../context/AuthContext";
 
 export default function LoginScreen( { navigation }) {
+   const [username, setUsername] = useState("");
+   const [password, setPassword] = useState("");
+   const { login } = useContext(AuthContext);
+
   return (
-  <View style={styles.container}>
-    <Text>
-      This is the LoginScreen
-    </Text>
-    <Button
-      title="Log in"
-      onPress={() => {}}
+    <View style={styles.container}>
+      <Text>This is the LoginScreen</Text>
+      <TextInput
+        value={username}
+        onChangeText={setUsername}
+        placeholder="User name"
       />
-    <Button
-      title="Register new account"
-      onPress={() => navigation.navigate("Register")}
+      <TextInput
+        value={password}
+        onChangeText={setPassword}
+        placeholder="Password"
+        secureTextEntry={true}
       />
-  </View>
+      <Button title="Log in" onPress={() => login(username, password) } />
+      <Button
+        title="Register new account"
+        onPress={() => navigation.navigate("Register")}
+      />
+    </View>
   );
 }
 

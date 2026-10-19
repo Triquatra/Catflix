@@ -9,7 +9,7 @@ function AuthProvider({ children }) {
   const [token, setToken] = useState(null);
 
   async function login (username, password) {
-
+  console.log("login körs", username);
     const response = await fetch(
        process.env.EXPO_PUBLIC_API_URL + "/api/login",
       {
@@ -21,6 +21,7 @@ function AuthProvider({ children }) {
       },
     );
      const data = await response.json(); 
+     console.log("svar", data);
      setToken(data.token);
      await SecureStore.setItemAsync("token", data.token);
   }
