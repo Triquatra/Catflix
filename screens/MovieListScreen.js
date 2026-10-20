@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Text, View, StyleSheet, Pressable, FlatList} from "react-native";
 import MovieCard from "../components/MovieCard"; 
+import { colors } from "../constants/Colors";
 
 export default function MovieListScreen({ navigation }) {
   const [movies, setMovies] = useState([]);
@@ -83,7 +84,7 @@ export default function MovieListScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#0a0a0a",
+    backgroundColor: colors.background,
   },
   header: {
     color: "white",

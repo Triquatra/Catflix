@@ -1,25 +1,42 @@
-import { Text, View, StyleSheet, Pressable } from "react-native";
+import { Text, View, StyleSheet, Pressable, Image } from "react-native";
+import { ImageBackground } from "react-native";
+import { colors } from "../constants/Colors";
+import { sharedStyles } from "../constants/Styles";
 
 export default function HomeScreen( { navigation }) {
   return (
-    <View style={styles.container}>
-      <Text style={styles.headline}>
-        Welcome to Catflix purr-fect movies, every time... *meow*
+    <ImageBackground
+      source={require("../assets/Catflix_background_1.png")}
+      style={styles.container}
+    >
+      <Image
+        source={require("../assets/Catflix_logo1.png")}
+        style={styles.logo}
+        resizeMode="contain"
+      />
+      <Text style={[sharedStyles.title, styles.shadow]}>
+        Purr-fectly honest reviews
       </Text>
-       <Text style={styles.description}>
-       Search movies, write reviews, and see what other cats are watching.
-       </Text>
+      <Text style={[sharedStyles.subtitle, sharedStyles.shadow]}>
+        Search, review and see what other cats are watching
+      </Text>
 
-      <Pressable style={styles.button}
-      onPress={() => navigation.navigate("Account", {screen: "Login"})}>
-      <Text>Login</Text>
-      </Pressable>
+      <View style={styles.buttonArea}>
+        <Pressable
+          style={styles.button}
+          onPress={() => navigation.navigate("Account", { screen: "Login" })}
+        >
+          <Text style={styles.buttonText}>Login</Text>
+        </Pressable>
 
-      <Pressable style={styles.button}
-        onPress={() => navigation.navigate("Account", { screen: "Register" })}>
-        <Text>Register</Text>
-      </Pressable>
-    </View>
+        <Pressable
+          style={styles.button}
+          onPress={() => navigation.navigate("Account", { screen: "Register" })}
+        >
+          <Text style={styles.buttonText}>Register</Text>
+        </Pressable>
+      </View>
+    </ImageBackground>
   );
 }
 
@@ -29,25 +46,40 @@ const styles = StyleSheet.create({
     backgroundColor: "#ff5858",
     alignItems: "center",
     justifyContent: "flex-start",
-    padding: 60,
-  },
-  headline: {
-    fontSize: 20,
-    fontFamily: "Righteous_400Regular",
-   
-  },
-  description: {
-    fontSize: 14,
-    fontFamily: "Poppins_400Regular",
-    marginTop: 6,
-    marginBottom: 20,
+    padding: 20,
   },
   button: {
     justifyContent: "space-around",
     borderRadius: 28,
     padding: 18,
-    borderColor: "black",
-    backgroundColor: "white",
+    borderWidth: 1,
+    borderColor: "rgba(255, 255, 255, 0.5)",
     margin: 10,
-  }
+    width: 140,
+    paddingVertical: 16,
+    paddingHorizontal: 32,
+    backgroundColor:"rgba(105, 34, 70, 0.75)",
+    elevation: 5,
+    shadowColor: "#000",
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    shadowOffset: { width: 0, height: 2 },
+  },
+  buttonArea: {
+    marginTop: "auto",
+    width: "100%",
+    alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+  },
+  buttonText: {
+    color: "white",
+    fontFamily: "Righteous_400Regular",
+    textAlign: "center",
+  },
+  logo: {
+    width: "80%",
+    maxWidth: 400,
+    height: 100,
+  },
 });

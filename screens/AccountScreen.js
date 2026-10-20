@@ -2,7 +2,7 @@ import { Text, View, StyleSheet, Button, TextInput, Pressable } from "react-nati
 import { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 
-export default function LoginScreen( { navigation }) {
+export default function AccountScreen( { navigation }) {
    const [username, setUsername] = useState("");
    const [password, setPassword] = useState("");
    const { login, token, logout } = useContext(AuthContext);
@@ -20,7 +20,7 @@ export default function LoginScreen( { navigation }) {
 
   return (
     <View style={styles.container}>
-      <Text>This is the LoginScreen</Text>
+      <Text>This is the LoginScreen in AccountScreen</Text>
       <TextInput
         value={username}
         onChangeText={setUsername}

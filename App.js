@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import HomeScreen from './screens/HomeScreen';
-import LoginScreen from './screens/LoginScreen';
+import AccountScreen from './screens/AccountScreen';
 import MovieDetailScreen from './screens/MovieDetailScreen';
 import MovieListScreen from './screens/MovieListScreen';
 import RegisterScreen from './screens/RegisterScreen';
@@ -59,7 +59,7 @@ function MainTabs() {
 function AccountStack() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Login" component={LoginScreen} />
+      <Stack.Screen name="Login" component={AccountScreen} />
       <Stack.Screen name="Register" component={RegisterScreen} />
     </Stack.Navigator>
   )
