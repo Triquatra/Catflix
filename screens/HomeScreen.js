@@ -24,7 +24,7 @@ export default function HomeScreen( { navigation }) {
       <View style={styles.buttonArea}>
         <Pressable
           style={styles.button}
-          onPress={() => navigation.navigate("Account", { screen: "Login" })}
+          onPress={() => navigation.navigate("Account", { screen: "Profile" })}
         >
           <Text style={styles.buttonText}>Login</Text>
         </Pressable>

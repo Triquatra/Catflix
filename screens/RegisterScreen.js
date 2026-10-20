@@ -33,7 +33,7 @@ export default function RegisterScreen( { navigation }) {
         <Pressable style={styles.button}
                 onPress={ async () => {
                   await register (username, password);
-                  navigation.navigate("Login");
+                  navigation.navigate("Profile");
                 }}>
                 <Text style={styles.buttonText}>Register</Text>
               </Pressable>
