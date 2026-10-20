@@ -18,3 +18,4 @@
 
     Hur projektet startas
     Kända problem eller begränsningar
+    * användarnamnet ligger kvar i rutan efter utloggning.

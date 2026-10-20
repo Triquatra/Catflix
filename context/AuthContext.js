@@ -7,6 +7,8 @@ const AuthContext = createContext();
 
 function AuthProvider({ children }) {
   const [token, setToken] = useState(null);
+  const [username, setUsername] = useState(null);
+
 
   async function login (username, password) {
   console.log("login körs", username);
@@ -23,11 +25,13 @@ function AuthProvider({ children }) {
      const data = await response.json(); 
      console.log("svar", data);
      setToken(data.token);
+     setUsername(username);
      await SecureStore.setItemAsync("token", data.token);
   }
 
     async function logout() {
       setToken(null);
+      setUsername(null);
       await SecureStore.deleteItemAsync("token");
     }
 
@@ -45,7 +49,7 @@ function AuthProvider({ children }) {
       await login (username, password);
     }
 
-  return <AuthContext.Provider value={{token, login, logout, register}}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{token, login, logout, register, username}}>{children}</AuthContext.Provider>;
 }
 
 export { AuthContext, AuthProvider };

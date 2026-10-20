@@ -2,44 +2,55 @@ import { Text, View, StyleSheet, Pressable, TextInput } from "react-native";
 import { useState, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { colors } from "../constants/Colors";
-import { sharedStyles } from "../constants/Styles"; 
+import { sharedStyles } from "../constants/Styles";
+import LoggedInCard from "../components/LoggedInCard";
 
-export default function RegisterScreen( { navigation }) {
+export default function RegisterScreen({ navigation }) {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const { register, token } = useContext(AuthContext);
 
- const [username, setUsername] = useState("");
-   const [password, setPassword] = useState("");
-   const { register } = useContext(AuthContext);
-
-   return (
-  <View style={styles.container}>
-    <View style={sharedStyles.card}>
-    <Text style={sharedStyles.title}>
-      Create account
-    </Text>
-    <Text style={sharedStyles.subtitle}>Become a part of Catflix</Text>
-        <TextInput style={sharedStyles.input}
+  if (token) {
+    return (
+      <View style={styles.container}>
+        <LoggedInCard />
+      </View>
+    );
+  }
+  
+  return (
+    <View style={styles.container}>
+      <View style={sharedStyles.card}>
+        <Text style={sharedStyles.title}>Create account</Text>
+        <Text style={sharedStyles.subtitle}>Become a part of Catflix</Text>
+        <TextInput
+          style={sharedStyles.input}
           value={username}
           onChangeText={setUsername}
           placeholder="Username"
           autoCapitalize="none"
         />
-        <TextInput style={sharedStyles.input}
+        <TextInput
+          style={sharedStyles.input}
           value={password}
           onChangeText={setPassword}
           placeholder="Password"
           secureTextEntry={true}
           autoCapitalize="none"
         />
-        <Pressable style={styles.button}
-                onPress={ async () => {
-                  await register (username, password);
-                  navigation.navigate("Profile");
-                }}>
-                <Text style={styles.buttonText}>Register</Text>
-              </Pressable>
-            </View>
+        <Pressable
+          style={styles.button}
+          onPress={async () => {
+            await register(username, password);
+            console.log("navigerar nu");
+            navigation.navigate("Profile");
+          }}
+        >
+          <Text style={styles.buttonText}>Register</Text>
+        </Pressable>
       </View>
-   );
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -67,7 +78,7 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     shadowOffset: { width: 0, height: 2 },
   },
-  
+
   buttonArea: {
     marginTop: "auto",
     width: "100%",
