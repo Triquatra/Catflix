@@ -13,6 +13,7 @@ import { Righteous_400Regular } from '@expo-google-fonts/righteous';
 import { Poppins_400Regular } from '@expo-google-fonts/poppins';
 import { AuthProvider } from './context/AuthContext';
 import { colors } from './constants/Colors';
+import { Ionicons } from '@expo/vector-icons';
 
 /*
   Navigation:
@@ -47,9 +48,16 @@ function MainTabs() {
   return (
     <Tab.Navigator
       screenOptions={{ headerShown: false,
-        tabBarStyle: {backgroundColor: colors.background },
-        tabBarActiveTintColor: colors.accent,
+        tabBarStyle: {backgroundColor:
+          colors.background,
+          borderTopWidth: 0,
+         },
+        tabBarActiveTintColor: colors.accentPurple,
         tabBarInactiveTintColor: colors.textMuted, 
+        tabBarIcon: ({color, focused}) => (
+          <Ionicons name={focused ? "paw" : "paw-outline"}
+          size={24} color={color} />
+        ),
        }}>
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen

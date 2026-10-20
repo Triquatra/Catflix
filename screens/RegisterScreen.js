@@ -17,7 +17,7 @@ export default function RegisterScreen({ navigation }) {
       </View>
     );
   }
-  
+
   return (
     <View style={styles.container}>
       <View style={sharedStyles.card}>
@@ -28,6 +28,7 @@ export default function RegisterScreen({ navigation }) {
           value={username}
           onChangeText={setUsername}
           placeholder="Username"
+          placeholderTextColor={colors.textMuted}
           autoCapitalize="none"
         />
         <TextInput
@@ -35,6 +36,7 @@ export default function RegisterScreen({ navigation }) {
           value={password}
           onChangeText={setPassword}
           placeholder="Password"
+          placeholderTextColor={colors.textMuted}
           secureTextEntry={true}
           autoCapitalize="none"
         />

@@ -21,28 +21,38 @@ export default function AccountScreen( { navigation }) {
   return (
     <View style={styles.container}>
       <View style={sharedStyles.card}>
-        <Text style={sharedStyles.title}>This is the LoginScreen in AccountScreen</Text>
-        <TextInput style={sharedStyles.input}
+        <Text style={sharedStyles.title}>Log in</Text>
+        <Text style={sharedStyles.subtitle}>Welcome back to Catflix</Text>
+        <TextInput
+          style={sharedStyles.input}
           value={inputUsername}
           onChangeText={setInputUsername}
           placeholder="Username"
+          placeholderTextColor={colors.textMuted}
+          autoCapitalize="none"
         />
-        <TextInput style={sharedStyles.input}
+        <TextInput
+          style={sharedStyles.input}
           value={password}
           onChangeText={setPassword}
           placeholder="Password"
+          placeholderTextColor={colors.textMuted}
           secureTextEntry={true}
+          autoCapitalize="none"
         />
-        <Pressable 
-        style={styles.button} 
-        onPress={async () => {
-           await login(inputUsername, password);
-          setPassword("");
-          }}>
-        <Text style={sharedStyles.buttonText}>Log in</Text>
+        <Pressable
+          style={sharedStyles.button}
+          onPress={async () => {
+            await login(inputUsername, password);
+            setPassword("");
+          }}
+        >
+          <Text style={sharedStyles.buttonText}>Log in</Text>
         </Pressable>
-        <Pressable style={styles.button}
-          onPress={() => navigation.navigate("Register")}>
+        <Pressable
+          style={sharedStyles.button}
+          onPress={() => navigation.navigate("Register")}
+        >
           <Text style={sharedStyles.buttonText}>Register</Text>
         </Pressable>
       </View>
@@ -53,7 +63,7 @@ export default function AccountScreen( { navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.background,
+    backgroundColor: "rgba(110, 26, 82, 0.85)",
     alignItems: "center",
     justifyContent: "center",
   },

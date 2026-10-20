@@ -2,51 +2,54 @@ import { Text, View, StyleSheet, Pressable, Image } from "react-native";
 import { ImageBackground } from "react-native";
 import { colors } from "../constants/Colors";
 import { sharedStyles } from "../constants/Styles";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function HomeScreen( { navigation }) {
   return (
-    <ImageBackground
-      source={require("../assets/Catflix_background_1.png")}
-      style={styles.container}
-    >
-      <Image
-        source={require("../assets/Catflix_logo1.png")}
-        style={styles.logo}
-        resizeMode="contain"
-      />
-      <Text style={[sharedStyles.title, styles.shadow]}>
-        Purr-fectly honest reviews
-      </Text>
-      <Text style={[sharedStyles.subtitle, sharedStyles.shadow]}>
-        Search, review and see what other cats are watching
-      </Text>
+      <ImageBackground
+        source={require("../assets/Catflix_background_1.png")}
+        style={styles.container}
+      >
+        <SafeAreaView style={sharedStyles.safeArea}>
+        <Image
+          source={require("../assets/Catflix_logo1.png")}
+          style={styles.logo}
+          resizeMode="contain"
+        />
+        <Text style={[sharedStyles.title, styles.shadow]}>
+          Purr-fectly honest reviews
+        </Text>
+        <Text style={[sharedStyles.subtitle, sharedStyles.shadow]}>
+          Search, review and see what other cats are watching
+        </Text>
 
-      <View style={styles.buttonArea}>
-        <Pressable
-          style={styles.button}
-          onPress={() => navigation.navigate("Account", { screen: "Profile" })}
-        >
-          <Text style={styles.buttonText}>Login</Text>
-        </Pressable>
+        <View style={styles.buttonArea}>
+          <Pressable
+            style={styles.button}
+            onPress={() =>
+              navigation.navigate("Account", { screen: "Profile" })
+            }
+          >
+            <Text style={styles.buttonText}>Login</Text>
+          </Pressable>
 
-        <Pressable
-          style={styles.button}
-          onPress={() => navigation.navigate("Account", { screen: "Register" })}
-        >
-          <Text style={styles.buttonText}>Register</Text>
-        </Pressable>
-      </View>
-    </ImageBackground>
+          <Pressable
+            style={styles.button}
+            onPress={() =>
+              navigation.navigate("Account", { screen: "Register" })
+            }
+          >
+            <Text style={styles.buttonText}>Register</Text>
+          </Pressable>
+        </View>
+       </SafeAreaView>
+      </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#ff5858",
-    alignItems: "center",
-    justifyContent: "flex-start",
-    padding: 20,
   },
   button: {
     justifyContent: "space-around",
