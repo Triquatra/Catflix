@@ -1,7 +1,7 @@
 // Ska enbart ses av inloggad användare
 
 import { useState, useContext } from "react";
-import { Text, View, StyleSheet, TextInput, Pressable } from "react-native";
+import { Text, View, StyleSheet, TextInput, Pressable, ImageBackground } from "react-native";
 import { AuthContext } from "../context/AuthContext";
 import { sharedStyles } from "../constants/Styles";
 import { colors } from "../constants/Colors";
@@ -9,17 +9,34 @@ import { Ionicons } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 
-export default function ReviewFormScreen( { route} ) {
+export default function ReviewFormScreen( { route, navigation} ) {
 
   const [review, setReview] = useState ("");
   const [rating, setRating] = useState(0);
   const { movieId } = route.params;
   const { token } = useContext(AuthContext);
 
+
+  async function saveReview () {
+    const response = await fetch(
+        process.env.EXPO_PUBLIC_API_URL + "/api/reviews",
+        {
+          method: "POST",
+          headers: { "Content-type": "application/json", "Authorization": token },
+          body: JSON.stringify({
+            movieId: movieId, reviewText: review, rating: rating,
+          })
+        },
+      );
+      navigation.goBack();
+    }
+
   return (
+    <ImageBackground source={require("../assets/review.png")}
+        style={styles.container}>
     <SafeAreaView style={styles.container}>
-      <View style={sharedStyles.card}>
-        <Text style={sharedStyles.title}>Write a review</Text>
+        <View style={sharedStyles.card}>
+        <Text style={[sharedStyles.title, styles.heading]}>Write a review</Text>
         <TextInput
           style={[sharedStyles.input, styles.textArea]}
           value={review}
@@ -29,34 +46,32 @@ export default function ReviewFormScreen( { route} ) {
           multiline
           numberOfLines={4}
         />
+        
         <View style={styles.pawRow}>
-          {[1,2,3,4,5].map((paw) => (
-          <Pressable key={paw} onPress={() => setRating(paw)}>
-            <Ionicons
-              name={rating >= paw ? "paw" : "paw-outline"}
-              size={32}
-              color={colors.accent}
-            />
-          </Pressable>
+          {[1, 2, 3, 4, 5].map((paw) => (
+            <Pressable key={paw} onPress={() => setRating(paw)}>
+              <Ionicons
+                name={rating >= paw ? "paw" : "paw-outline"}
+                size={32}
+                color={colors.accentAlt}
+              />
+            </Pressable>
           ))}
-           <Pressable
-                style={sharedStyles.button}
-                onPress={() => {} }>
-             <Text style={sharedStyles.buttonText}>Submit</Text>
-          </Pressable>
+          </View>
+          <Pressable style={sharedStyles.button} onPress={() => saveReview()}>
+        <Text style={sharedStyles.buttonText}>Submit</Text> 
+        </Pressable>     
       </View>
-      </View>
-    </SafeAreaView>
+    </SafeAreaView> 
+    </ImageBackground> 
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.surfaceAlt,
     alignItems: "center",
     justifyContent: "center",
-  
   },
   pawRow: {
     flexDirection: "row",
@@ -67,4 +82,7 @@ const styles = StyleSheet.create({
     height: 120,
     textAlignVertical: "top",
   },
+  heading: {
+    marginBottom: 20,
+  }
 });
