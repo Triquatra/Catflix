@@ -1,7 +1,7 @@
 // Ska enbart ses av inloggad användare
 
 import { useState, useContext } from "react";
-import { Text, View, StyleSheet, TextInput, Pressable, ImageBackground } from "react-native";
+import { Text, View, StyleSheet, TextInput, Pressable, ImageBackground, Alert } from "react-native";
 import { AuthContext } from "../context/AuthContext";
 import { sharedStyles } from "../constants/Styles";
 import { colors } from "../constants/Colors";
@@ -18,6 +18,16 @@ export default function ReviewFormScreen( { route, navigation} ) {
 
 
   async function saveReview () {
+    if (review.trim()=== "") {
+            Alert.alert ("Oops", "Write something first!");
+              return;
+          }
+
+          if (rating === 0) {
+            Alert.alert ("Paws!", "You have to rate the movie first")
+            return;
+          }
+    
     const response = await fetch(
         process.env.EXPO_PUBLIC_API_URL + "/api/reviews",
         {
@@ -26,6 +36,7 @@ export default function ReviewFormScreen( { route, navigation} ) {
           body: JSON.stringify({
             movieId: movieId, reviewText: review, rating: rating,
           })
+
         },
       );
       navigation.goBack();
@@ -72,6 +83,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    width: "100%",
   },
   pawRow: {
     flexDirection: "row",
@@ -79,7 +91,8 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   textArea: {
-    height: 120,
+    minHeight: 120,
+    maxHeight: 200,
     textAlignVertical: "top",
   },
   heading: {
