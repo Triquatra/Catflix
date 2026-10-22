@@ -20,7 +20,7 @@ export default function HomeScreen( { navigation }) {
           Purr-fectly honest reviews
         </Text>
         <Text style={[sharedStyles.subtitle, sharedStyles.shadow]}>
-          Search, review and see what other cats are watching
+          Search, review and see what the crowd is watching
         </Text>
 
         <View style={styles.buttonArea}>

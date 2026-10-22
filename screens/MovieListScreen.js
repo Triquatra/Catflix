@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
-import { Text, View, StyleSheet, Pressable, FlatList} from "react-native";
+import { Text, View, StyleSheet, Pressable, FlatList, ImageBackground} from "react-native";
 import MovieCard from "../components/MovieCard"; 
 import { colors } from "../constants/Colors";
+import { sharedStyles } from "../constants/Styles";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function MovieListScreen({ navigation }) {
   const [movies, setMovies] = useState([]);
@@ -47,36 +49,41 @@ export default function MovieListScreen({ navigation }) {
 
    if (movies.length === 0) {
     return (
-      <View>
-        <Text>No movies found.</Text>
+      <View style={styles.container}>
+        <Text style={sharedStyles.title}>No movies found.</Text>
       </View>
-    )
+    );
    }
 
   return (
-  <View style={styles.container}>
-    <Text style={styles.header}>
-      This is the MovieListScreen
-    </Text>
-  
-    {/*När man trycker på ett kort körs onPress.
+    <ImageBackground
+      source={require("../assets/clouds.png")}
+      style={styles.container}
+    >
+      <SafeAreaView style={sharedStyles.safeArea}>
+       
+        <View>
+          <Text style={sharedStyles.title}>This is the MovieListScreen</Text>
+
+          {/*När man trycker på ett kort körs onPress.
      Den säger åt navigation att gå till MovieDetail
     och skickar med en lapp med etiketten movie där filmen ligger.*/}
-    <FlatList
-      data={movies}
-      keyExtractor={(item) =>String(item.id)}
-      renderItem={({ item }) => (
-        <Pressable
-        onPress={() =>
-          navigation.navigate("MovieDetail", { movie: item }
-          )
-        }
-        >
-          <MovieCard movie={item} />
-          </Pressable>
-      )}
-      />
-  </View>
+          <FlatList
+            data={movies}
+            keyExtractor={(item) => String(item.id)}
+            renderItem={({ item }) => (
+              <Pressable
+                onPress={() =>
+                  navigation.navigate("MovieDetail", { movie: item })
+                }
+              >
+                <MovieCard movie={item} />
+              </Pressable>
+            )}
+          />
+        </View>
+      </SafeAreaView>
+    </ImageBackground>
   );
 }
 
@@ -85,13 +92,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.background,
+    alignItems: "center",
+    justifyContent: "center",
   },
-  header: {
-    color: "white",
-    fontSize: 24,
-    fontFamily: "Righteous_400Regular",
-    paddingHorizontal: 16,
-    paddingTop: 16,
-    paddingBottom: 8,
-  },
+  centered: {
+    flex: 1,
+    backgroundColor: colors.background,
+    alignItems: "center",
+    justifyContent: "center",
+  }
 });

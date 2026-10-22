@@ -1,4 +1,3 @@
-import { StyleSheet } from 'react-native';
 import HomeScreen from './screens/HomeScreen';
 import AccountScreen from './screens/AccountScreen';
 import MovieDetailScreen from './screens/MovieDetailScreen';

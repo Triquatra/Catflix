@@ -1,42 +1,87 @@
-import { Text, View, StyleSheet, Image, ScrollView } from "react-native";
+import {
+  Text,
+  View,
+  StyleSheet,
+  Image,
+  ScrollView,
+  Pressable,
+  ImageBackground,
+} from "react-native";
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
+import { sharedStyles } from "../constants/Styles";
+import { colors } from "../constants/Colors";
+import { LinearGradient } from "expo-linear-gradient";
 
-export default function MovieDetailScreen({ route }) {
+export default function MovieDetailScreen({ route, navigation }) {
   const { movie } = route.params;
+  const { token } = useContext(AuthContext);
 
   return (
-  <ScrollView style={styles.scroll} contentContainerStyle={styles.content}>
-   
-    <Image style={styles.image}
-             source={{
-        uri: "https://image.tmdb.org/t/p/w500" + movie.backdrop_path
-             }}/>
-    <View style={styles.textContainer}>
-    <Text style={styles.title}> {movie.title} </Text>
-    <Text>{movie.overview}</Text>
+    <ImageBackground
+        source={require("../assets/paw_print.png")}
+        style={styles.container}>
+      <ScrollView style={styles.scroll} contentContainerStyle={styles.content}>
+        <View>
+        <Image
+      style={styles.image}
+      source={{ uri: "https://image.tmdb.org/t/p/w500" + movie.backdrop_path }}
+    />
+    <LinearGradient
+    colors={["transparent", colors.background]}
+    style={styles.gradient}
+    />
     </View>
-  </ScrollView>
+          <View style={styles.textContainer}>
+            <Text style={sharedStyles.title}> {movie.title} </Text>
+            <Text style={[sharedStyles.subtitle, sharedStyles.shadow]}>{movie.overview}</Text>
+
+            {token ? (
+              <Pressable
+                style={sharedStyles.button}
+                onPress={() =>
+                  navigation.navigate("Review", { movieId: movie.id })
+                }
+              >
+                <Text style={sharedStyles.buttonText}>Write a review</Text>
+              </Pressable>
+            ) : (
+              <Text style={sharedStyles.subtitle}>
+                Log in to write a review
+              </Text>
+            )}
+          </View>        
+      </ScrollView>
+      </ImageBackground>
   );
 }
 
-
 const styles = StyleSheet.create({
-  scroll: {
+  container: {
     flex: 1,
-    backgroundColor: "#5aa6fd",
   },
   content: {
-    alignItems: "center",
+    flexGrow: 1,
+    paddingBottom: 16,
   },
   image: {
     width: "100%",
     aspectRatio: 16 / 9,
   },
   textContainer: {
-    padding: 16,
+    backgroundColor: "rgba(0, 0, 0, 0.6)",
+    borderRadius: 16,
+    padding: 20,
+    margin: 16,
+    marginTop: 20,
+    borderWidth: 1,
+    borderColor: "rgba(255, 255, 255, 0.15)",
   },
-  title: {
-    fontSize: 22,
-    fontFamily: "Righteous_400Regular",
-    marginBottom: 8,
+  gradient: {
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
+    height: 80,
   },
 });

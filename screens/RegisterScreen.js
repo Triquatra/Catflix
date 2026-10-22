@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet, Pressable, TextInput } from "react-native";
+import { Text, View, StyleSheet, Pressable, TextInput, ImageBackground } from "react-native";
 import { useState, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { colors } from "../constants/Colors";
@@ -19,6 +19,10 @@ export default function RegisterScreen({ navigation }) {
   }
 
   return (
+    <ImageBackground
+          source={require("../assets/paw_print.png")}
+          style={styles.container}
+        >
     <View style={styles.container}>
       <View style={sharedStyles.card}>
         <Text style={sharedStyles.title}>Create account</Text>
@@ -52,13 +56,13 @@ export default function RegisterScreen({ navigation }) {
         </Pressable>
       </View>
     </View>
+  </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#e2b3f0",
     alignItems: "center",
     justifyContent: "center",
   },

@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet, TextInput, Pressable } from "react-native";
+import { Text, View, StyleSheet, TextInput, Pressable, ImageBackground } from "react-native";
 import { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { sharedStyles } from "../constants/Styles";
@@ -19,51 +19,55 @@ export default function AccountScreen( { navigation }) {
    }
 
   return (
-    <View style={styles.container}>
-      <View style={sharedStyles.card}>
-        <Text style={sharedStyles.title}>Log in</Text>
-        <Text style={sharedStyles.subtitle}>Welcome back to Catflix</Text>
-        <TextInput
-          style={sharedStyles.input}
-          value={inputUsername}
-          onChangeText={setInputUsername}
-          placeholder="Username"
-          placeholderTextColor={colors.textMuted}
-          autoCapitalize="none"
-        />
-        <TextInput
-          style={sharedStyles.input}
-          value={password}
-          onChangeText={setPassword}
-          placeholder="Password"
-          placeholderTextColor={colors.textMuted}
-          secureTextEntry={true}
-          autoCapitalize="none"
-        />
-        <Pressable
-          style={sharedStyles.button}
-          onPress={async () => {
-            await login(inputUsername, password);
-            setPassword("");
-          }}
-        >
-          <Text style={sharedStyles.buttonText}>Log in</Text>
-        </Pressable>
-        <Pressable
-          style={sharedStyles.button}
-          onPress={() => navigation.navigate("Register")}
-        >
-          <Text style={sharedStyles.buttonText}>Register</Text>
-        </Pressable>
+    <ImageBackground
+      source={require("../assets/clouds_moon.png")}
+      style={styles.container}
+    >
+      <View style={styles.container}>
+        <View style={sharedStyles.card}>
+          <Text style={sharedStyles.title}>Log in</Text>
+          <Text style={sharedStyles.subtitle}>Welcome back to Catflix</Text>
+          <TextInput
+            style={sharedStyles.input}
+            value={inputUsername}
+            onChangeText={setInputUsername}
+            placeholder="Username"
+            placeholderTextColor={colors.textMuted}
+            autoCapitalize="none"
+          />
+          <TextInput
+            style={sharedStyles.input}
+            value={password}
+            onChangeText={setPassword}
+            placeholder="Password"
+            placeholderTextColor={colors.textMuted}
+            secureTextEntry={true}
+            autoCapitalize="none"
+          />
+          <Pressable
+            style={sharedStyles.button}
+            onPress={async () => {
+              await login(inputUsername, password);
+              setPassword("");
+            }}
+          >
+            <Text style={sharedStyles.buttonText}>Log in</Text>
+          </Pressable>
+          <Pressable
+            style={sharedStyles.button}
+            onPress={() => navigation.navigate("Register")}
+          >
+            <Text style={sharedStyles.buttonText}>Register</Text>
+          </Pressable>
+        </View>
       </View>
-    </View>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "rgba(110, 26, 82, 0.85)",
     alignItems: "center",
     justifyContent: "center",
   },
