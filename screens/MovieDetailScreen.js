@@ -6,6 +6,7 @@ import {
   ScrollView,
   Pressable,
   ImageBackground,
+  Share,
 } from "react-native";
 import { useCallback, useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
@@ -55,6 +56,17 @@ export default function MovieDetailScreen({ route, navigation }) {
     }
   }
 
+  async function shareMovieTip() {
+    try {
+      await Share.share({
+        message:
+          "Paws everything and check out " + movie.title + " on Catflix!",
+      });
+    } catch (error) {
+      console.log("Couldn't share movie");
+    }
+  }
+
   return (
     <ImageBackground
       source={require("../assets/paw_print.png")}
@@ -72,6 +84,10 @@ export default function MovieDetailScreen({ route, navigation }) {
             colors={["transparent", colors.background]}
             style={styles.gradient}
           />
+      
+        <Pressable style={styles.shareButton} onPress={() => shareMovieTip()}>
+          <Ionicons name="share-outline" size={24} color={colors.accentPurple} />
+        </Pressable>  
         </View>
         <View style={styles.textContainer}>
           <Text style={sharedStyles.title}> {movie.title} </Text>
@@ -94,7 +110,9 @@ export default function MovieDetailScreen({ route, navigation }) {
 
           {reviews.map((review) => (
             <View key={review.id}>
-              <Text style={[sharedStyles.title, styles.reviewName]}>{review.userName}</Text>
+              <Text style={[sharedStyles.title, styles.reviewName]}>
+                {review.userName}
+              </Text>
               <View style={styles.pawRow}>
                 {[1, 2, 3, 4, 5].map((paw) => (
                   <Ionicons
@@ -108,18 +126,23 @@ export default function MovieDetailScreen({ route, navigation }) {
               <Text style={sharedStyles.subtitle}>{review.reviewText}</Text>
               {review.userName === username && (
                 <View style={styles.buttonRow}>
-                <Pressable
-                  style={[sharedStyles.button, styles.smallButton]}
-                  onPress={() => navigation.navigate("Review", {movieId : movie.id, review: review})}
-                >
-                  <Text style={sharedStyles.buttonText}>Edit</Text>
-                </Pressable>
-               <Pressable
-                  style={[sharedStyles.button, styles.smallButton]}
-                  onPress={() => deleteReview(review.id)}
-                >
-                  <Text style={sharedStyles.buttonText}>Delete</Text>
-                </Pressable>
+                  <Pressable
+                    style={[sharedStyles.button, styles.smallButton]}
+                    onPress={() =>
+                      navigation.navigate("Review", {
+                        movieId: movie.id,
+                        review: review,
+                      })
+                    }
+                  >
+                    <Text style={sharedStyles.buttonText}>Edit</Text>
+                  </Pressable>
+                  <Pressable
+                    style={[sharedStyles.button, styles.smallButton]}
+                    onPress={() => deleteReview(review.id)}
+                  >
+                    <Text style={sharedStyles.buttonText}>Delete</Text>
+                  </Pressable>
                 </View>
               )}
             </View>
@@ -174,5 +197,13 @@ const styles = StyleSheet.create({
   },
   buttonRow: {
     flexDirection: "row",
+  },
+  shareButton: {
+    position: "absolute",
+    top: 16,
+    right: 16,
+    backgroundColor: "rgba(13, 13, 13, 0.9)",
+    borderRadius: 24,
+    padding: 10,
   },
 });
