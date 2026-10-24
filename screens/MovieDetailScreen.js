@@ -7,11 +7,12 @@ import {
   Pressable,
   ImageBackground,
 } from "react-native";
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { sharedStyles } from "../constants/Styles";
 import { colors } from "../constants/Colors";
 import { LinearGradient } from "expo-linear-gradient";
+import { useFocusEffect } from "@react-navigation/native";
 
 export default function MovieDetailScreen({ route, navigation }) {
   const { movie } = route.params;
@@ -19,22 +20,24 @@ export default function MovieDetailScreen({ route, navigation }) {
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    async function getReviews() {
-      try {
-        const response = await fetch(
-          process.env.EXPO_PUBLIC_API_URL + "/api/reviews?movieId=" + movie.id,
-        );
-        const data = await response.json();
-        setReviews(data);
-      } catch (error) {
-        console.log("Could not fetch reviews");
-      } finally {
-        setLoading(false);
-      }
+  async function getReviews() {
+    try {
+      const response = await fetch(
+        process.env.EXPO_PUBLIC_API_URL + "/api/reviews?movieId=" + movie.id,
+      );
+      const data = await response.json();
+      setReviews(data);
+    } catch (error) {
+      console.log("Could not fetch reviews");
+    } finally {
+      setLoading(false);
     }
-    getReviews();
-  }, []);
+  }
+  useFocusEffect(
+    useCallback(() => {
+      getReviews();
+    }, []),
+  );
 
   async function deleteReview(reviewId) {
     try {
@@ -92,11 +95,14 @@ export default function MovieDetailScreen({ route, navigation }) {
             <View key={review.id}>
               <Text style={sharedStyles.title}>{review.userName}</Text>
               <Text style={sharedStyles.subtitle}>{review.reviewText}</Text>
-              <Pressable
-                style={sharedStyles.button}
-                onPress={() => deleteReview(review.id)}>
-                <Text>Delete</Text>
-              </Pressable>
+              {review.userName === username && (
+                <Pressable
+                  style={sharedStyles.button}
+                  onPress={() => deleteReview(review.id)}
+                >
+                  <Text>Delete</Text>
+                </Pressable>
+              )}
             </View>
           ))}
         </View>
