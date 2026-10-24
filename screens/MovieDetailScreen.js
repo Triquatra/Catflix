@@ -13,6 +13,7 @@ import { sharedStyles } from "../constants/Styles";
 import { colors } from "../constants/Colors";
 import { LinearGradient } from "expo-linear-gradient";
 import { useFocusEffect } from "@react-navigation/native";
+import { Ionicons } from "@expo/vector-icons";
 
 export default function MovieDetailScreen({ route, navigation }) {
   const { movie } = route.params;
@@ -93,14 +94,24 @@ export default function MovieDetailScreen({ route, navigation }) {
 
           {reviews.map((review) => (
             <View key={review.id}>
-              <Text style={sharedStyles.title}>{review.userName}</Text>
+              <Text style={[sharedStyles.title, styles.reviewName]}>{review.userName}</Text>
+              <View style={styles.pawRow}>
+                {[1, 2, 3, 4, 5].map((paw) => (
+                  <Ionicons
+                    key={paw}
+                    name={review.rating >= paw ? "paw" : "paw-outline"}
+                    size={14}
+                    color={colors.accentAlt}
+                  />
+                ))}
+              </View>
               <Text style={sharedStyles.subtitle}>{review.reviewText}</Text>
               {review.userName === username && (
                 <Pressable
-                  style={sharedStyles.button}
+                  style={[sharedStyles.button, styles.smallButton]}
                   onPress={() => deleteReview(review.id)}
                 >
-                  <Text>Delete</Text>
+                  <Text style={sharedStyles.buttonText}>Delete</Text>
                 </Pressable>
               )}
             </View>
@@ -138,5 +149,19 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     height: 80,
+  },
+  pawRow: {
+    flexDirection: "row",
+    gap: 8,
+    marginBottom: 8,
+  },
+  smallButton: {
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    alignSelf: "flex-start",
+  },
+  reviewName: {
+    textAlign: "left",
+    fontSize: 18,
   },
 });
