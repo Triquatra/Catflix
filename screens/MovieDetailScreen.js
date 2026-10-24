@@ -107,12 +107,20 @@ export default function MovieDetailScreen({ route, navigation }) {
               </View>
               <Text style={sharedStyles.subtitle}>{review.reviewText}</Text>
               {review.userName === username && (
+                <View style={styles.buttonRow}>
                 <Pressable
+                  style={[sharedStyles.button, styles.smallButton]}
+                  onPress={() => navigation.navigate("Review", {movieId : movie.id, review: review})}
+                >
+                  <Text style={sharedStyles.buttonText}>Edit</Text>
+                </Pressable>
+               <Pressable
                   style={[sharedStyles.button, styles.smallButton]}
                   onPress={() => deleteReview(review.id)}
                 >
                   <Text style={sharedStyles.buttonText}>Delete</Text>
                 </Pressable>
+                </View>
               )}
             </View>
           ))}
@@ -163,5 +171,8 @@ const styles = StyleSheet.create({
   reviewName: {
     textAlign: "left",
     fontSize: 18,
+  },
+  buttonRow: {
+    flexDirection: "row",
   },
 });

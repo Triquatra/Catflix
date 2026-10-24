@@ -11,13 +11,14 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function ReviewFormScreen( { route, navigation} ) {
 
-  const [review, setReview] = useState ("");
-  const [rating, setRating] = useState(0);
-  const { movieId } = route.params;
+  const { movieId, review : existingReview } = route.params;
+  const [review, setReview] = useState(existingReview ? existingReview.reviewText : "");
+  const [rating, setRating] = useState(existingReview ? existingReview.rating : 0);
   const { token } = useContext(AuthContext);
 
 
   async function saveReview () {
+
     if (review.trim()=== "") {
             Alert.alert ("Oops", "Write something first!");
               return;
@@ -27,11 +28,16 @@ export default function ReviewFormScreen( { route, navigation} ) {
             Alert.alert ("Paws!", "You have to rate the movie first")
             return;
           }
-    
+
+    const method = existingReview ? "PATCH" : "POST";
+    const url = existingReview
+      ? process.env.EXPO_PUBLIC_API_URL + "/api/reviews/" + existingReview.id
+      : process.env.EXPO_PUBLIC_API_URL + "/api/reviews";
+w
     const response = await fetch(
-        process.env.EXPO_PUBLIC_API_URL + "/api/reviews",
+        url,
         {
-          method: "POST",
+          method: method,
           headers: { "Content-type": "application/json", "Authorization": token },
           body: JSON.stringify({
             movieId: movieId, reviewText: review, rating: rating,
