@@ -15,29 +15,41 @@ import { LinearGradient } from "expo-linear-gradient";
 
 export default function MovieDetailScreen({ route, navigation }) {
   const { movie } = route.params;
-  const { token } = useContext(AuthContext);
+  const { token, username } = useContext(AuthContext);
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function getReviews() {
       try {
-        const response = await fetch (
-          process.env.EXPO_PUBLIC_API_URL +
-          "/api/reviews?movieId=" + movie.id
+        const response = await fetch(
+          process.env.EXPO_PUBLIC_API_URL + "/api/reviews?movieId=" + movie.id,
         );
         const data = await response.json();
         setReviews(data);
-
       } catch (error) {
         console.log("Could not fetch reviews");
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
+    }
+    getReviews();
+  }, []);
+
+  async function deleteReview(reviewId) {
+    try {
+      const response = await fetch(
+        process.env.EXPO_PUBLIC_API_URL + "/api/reviews/" + reviewId,
+        {
+          method: "DELETE",
+          headers: { Authorization: token },
+        },
+      );
+      setReviews(reviews.filter((r) => r.id !== reviewId));
+    } catch (error) {
+      console.log("Could not delete review");
+    }
   }
-  getReviews();
-},
-[]);
 
   return (
     <ImageBackground
@@ -80,6 +92,11 @@ export default function MovieDetailScreen({ route, navigation }) {
             <View key={review.id}>
               <Text style={sharedStyles.title}>{review.userName}</Text>
               <Text style={sharedStyles.subtitle}>{review.reviewText}</Text>
+              <Pressable
+                style={sharedStyles.button}
+                onPress={() => deleteReview(review.id)}>
+                <Text>Delete</Text>
+              </Pressable>
             </View>
           ))}
         </View>
